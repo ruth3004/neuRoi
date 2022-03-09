@@ -643,6 +643,7 @@ classdef TrialModel < handle
             elseif strcmp(option,'replace')
                 self.roiArray = roiArray;
                 tagArray = self.getAllRoiTag();
+%                tagArray=cellfun(@(x) double(x), tagArray); %Added by NT on 09/03/22
                 self.roiTagMax = max(tagArray);
                 notify(self,'roiArrayReplaced');
             end
