@@ -60,14 +60,20 @@ classdef NrModel < handle
     end
     
     methods
-        function self = NrModel(varargin)
+        function self = NrModel(rawDataDir,rawFileList,resultDir, ...
+                                expInfo,varargin)
+                            %self = NrModel(varargin) by NT on 09/03/22
             pa = inputParser;
-            addParameter(pa,'rawDataDir','',@ischar);
-            addParameter(pa,'rawFileList','',@iscell);
-            addParameter(pa,'resultDir','',@ischar);
-            defaultExpInfo.frameRate = 1;
-            defaultExpInfo.nPlane = 1;
-            addParameter(pa,'expInfo',defaultExpInfo,@isstruct);
+%             addParameter(pa,'rawDataDir','',@ischar);
+%             addParameter(pa,'rawFileList','',@iscell);
+%             addParameter(pa,'resultDir','',@ischar);
+%             defaultExpInfo.frameRate = 1;
+%             defaultExpInfo.nPlane = 1; by NT on 09/03/22
+            addRequired(pa,'rawDataDir');
+            addRequired(pa,'rawFileList');
+            addRequired(pa,'resultDir');
+            addRequired(pa,'expInfo');
+            %addParameter(pa,'expInfo',defaultExpInfo,@isstruct);
             % addParameter(pa,'alignFilePath','',@ischar)
             addParameter(pa,'roiDir','',@ischar);
             addParameter(pa,'loadFileType','raw',@ischar);
@@ -116,7 +122,9 @@ classdef NrModel < handle
             addParameter(pa, 'CLAHEParameter',defaultCLAHEParameter, @isstruct);
             addParameter(pa, 'SIFTParameter',defaultSIFTParameter, @isstruct);
 
-            parse(pa,varargin{:})
+            %parse(pa,varargin{:}) by NT 09/03/22
+            parse(pa,rawDataDir,rawFileList,resultDir,expInfo, ...
+                  varargin{:})
             pr = pa.Results;
             
             self.BUnwarpJParameter=pr.BUnwarpJParameter;
