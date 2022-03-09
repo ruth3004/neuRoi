@@ -1142,12 +1142,22 @@ classdef NrModel < handle
     methods (Static)
         function obj = loadobj(s)
             if isstruct(s)
-                obj = NrModel();
+%                 obj = NrModel();
+%                 
+%                 for fn = fieldnames(s)'
+%                     obj.(fn{1}) = s.(fn{1});
+%                 end 
+                %by NT on 09/03/22
+                obj = NrModel(s.rawDataDir,s.rawFileList, ...
+                              s.resultDir,s.expInfo);
                 
                 for fn = fieldnames(s)'
-                    obj.(fn{1}) = s.(fn{1});
-                end
-                
+                    if ~ismember(fn,{'rawDataDir','rawFileList', ...
+                                     'resultDir','expInfo'})
+                        obj.(fn{1}) = s.(fn{1});
+                    end
+                end 
+                %
                 if isstruct(obj.alignResult)
                     obj.alignToTemplate = true;
                 end
