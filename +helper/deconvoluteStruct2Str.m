@@ -33,7 +33,11 @@ function output = deconvoluteStruct2Str(input,parentStruct,parentName)
             if UseParentStruct
                 output(i)=strcat(parentName,'_',name,":",value);
             else
+                if isempty(strcat(name,":",value))
+                 output(i)='0';
+                else
                 output(i)=strcat(name,":",value);
+                end
             end
         end
     end
