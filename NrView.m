@@ -177,7 +177,7 @@ classdef NrView < handle
 
         function updateCalculatedTransformationsListBox(self,src,event)
             CalculatedTransformationsList = self.model.CalculatedTransformationsList;
-            set(self.guiHandles.BUnwarpJCalculatedTransformations,'String',CalculatedTransformationsList);
+            set(self.guiHandles.BUnwarpJCalculatedTransformations,'String',CalculatedTransformationsList{1}); %by NT, 09/03/22
         end
 
         function updateTransformationTooltip(self)

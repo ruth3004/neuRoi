@@ -969,7 +969,7 @@ classdef NrModel < handle
                 %ReferenceIdx=self.ReferenceTrialIdx; %obsolete
                 FilesWORef = self.rawFileList;
                 TransformName=self.TransformationName;
-                FilesWORef= arrayfun(@(x) fullfile(self.resultDir,self.anatomyDir,TransformationParameters.Plane,strcat("anatomy_",x)), FilesWORef);
+                FilesWORef= arrayfun(@(x) fullfile(self.resultDir,self.anatomyDir,TransformationParameters.Plane,strcat("anatomy_binned_x1y1z2_",x)), FilesWORef); %by NT, 09/03/22
                 BUnwarpJFolder= fullfile(self.resultDir,"BUnwarpJ",TransformName,TransformationParameters.Plane);
                 mkdir(BUnwarpJFolder);
     
@@ -977,7 +977,8 @@ classdef NrModel < handle
                 ReferenceFile=ReferenceFile{1};
                 RoiFilePrefix=ReferenceFile(1:end-4);
                 %Rois=load(fullfile(self.roiDir,strcat("plane0",string(self.planeNum)),"20210902_JH18_Dp_s3_o4arg_001__RoiArray.mat"));
-                Rois=fullfile(self.roiDir,TransformationParameters.Plane,strcat(RoiFilePrefix,"_RoiArray.mat"));
+                %Rois=fullfile(self.roiDir,TransformationParameters.Plane,strcat(RoiFilePrefix,"_RoiArray.mat"));
+                Rois=fullfile(self.roiDir,strcat('plane0',num2str(self.planeNum)),strcat('binned_x1y1z2_',RoiFilePrefix,"_RoiArray.mat")); %by NT, 09/03/22
                 if ~isfile(Rois)
                     waitfor(msgbox("Cannot find rois for selected reference trial. Please select a different trial","modal"));
                     return
@@ -1007,7 +1008,7 @@ classdef NrModel < handle
                 
                 %add Trasnformationname to list;sve calculated rois to load
                 %them later; clear variables
-                self.CalculatedTransformationsList(length(self.CalculatedTransformationsList)+1)={TransformName};
+                self.CalculatedTransformationsList{length(self.CalculatedTransformationsList)+1}={TransformName};
                 save(fullfile(self.resultDir,"BUnwarpJ",TransformName,"Rois.mat"),"RoiArray");
                 save(fullfile(self.resultDir,"BUnwarpJ",TransformName,"TransformationParameters.mat"),"TransformationParameters");
                 self.BUnwarpJCalculated= true;
@@ -1095,7 +1096,9 @@ classdef NrModel < handle
                 anatomyArray = batch.loadStack(inDir,anatomyFileList);
                 
                 %Load rois
-                CalculatedTransformationName= self.CalculatedTransformationsList(self.CalculatedTransformationsIdx);
+%               CalculatedTransformationName=
+%               self.CalculatedTransformationsList(self.CalculatedTransformationsIdx); %by NT, 09/03/22
+                CalculatedTransformationName= self.CalculatedTransformationsList{1}; %by NT, 09/03/22
                 RoisStruc= load(fullfile(self.resultDir,"BUnwarpJ",CalculatedTransformationName,"Rois.mat"));
                 TempCellArray=struct2cell(RoisStruc.RoiArray);
                 self.BUnwarpJRoiCellarray=squeeze(TempCellArray(1,:,:));
