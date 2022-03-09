@@ -1,4 +1,4 @@
-function [alignResult,varargout] = alignTrials(inDir,inFileList,templateName,varargin)
+function [alignResult,varargout] = alignTrials(inDir,tempDir,inFileList,templateName,varargin)
 % ALIGNTRIALS align each trial with respect to the template anatomy
 % image
 %     Args:
@@ -22,7 +22,7 @@ anatomyArray = batch.loadStack(pr.inDir,pr.inFileList);
 
 templateDir = fileparts(pr.templateName);
 if isempty(templateDir)
-    templatePath = fullfile(pr.inDir,pr.templateName);
+    templatePath = fullfile(tempDir,pr.templateName);
 else
     templatePath = pr.templateName;
 end
