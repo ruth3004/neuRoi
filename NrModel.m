@@ -1008,7 +1008,7 @@ classdef NrModel < handle
                 
                 %add Trasnformationname to list;sve calculated rois to load
                 %them later; clear variables
-                self.CalculatedTransformationsList{length(self.CalculatedTransformationsList)+1}={TransformName};
+                self.CalculatedTransformationsList{length(self.CalculatedTransformationsList)+1}=TransformName;
                 save(fullfile(self.resultDir,"BUnwarpJ",TransformName,"Rois.mat"),"RoiArray");
                 save(fullfile(self.resultDir,"BUnwarpJ",TransformName,"TransformationParameters.mat"),"TransformationParameters");
                 self.BUnwarpJCalculated= true;
@@ -1095,8 +1095,7 @@ classdef NrModel < handle
                                         '','tif');
                 anatomyArray = batch.loadStack(inDir,anatomyFileList);
                 
-                %Load rois
-%               CalculatedTransformationName=
+                %Load rois               
 %               self.CalculatedTransformationsList(self.CalculatedTransformationsIdx); %by NT, 09/03/22
                 CalculatedTransformationName= self.CalculatedTransformationsList{1}; %by NT, 09/03/22
                 RoisStruc= load(fullfile(self.resultDir,"BUnwarpJ",CalculatedTransformationName,"Rois.mat"));
