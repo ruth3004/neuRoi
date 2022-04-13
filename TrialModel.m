@@ -625,16 +625,17 @@ classdef TrialModel < handle
         end
         
         function loadRoiArray(self,filePath,option)
-            foo = load(filePath);
-            roiArray = foo.roiArray;
-            nRoi = length(roiArray);
+              %foo = load(filePath);
+              %roiArray = foo.roiArray; %Edited by NT on 6/4/22 
+               roiArray=filePath; %Edited by NT on 6/4/22 
+            nRoi = length(filePath);
                 if nRoi >= self.MAX_N_ROI
                     error('Maximum number of ROIs exceeded!')
                 end
             self.insertRoiArray(roiArray,option)
-            if isfield(foo,'templateAnatomy')
-                self.templateAnatomy = foo.templateAnatomy;
-            end
+%             if isfield(foo,'templateAnatomy')
+%                 self.templateAnatomy = foo.templateAnatomy;
+%             end
         end
 
         function insertRoiArray(self,roiArray,option)

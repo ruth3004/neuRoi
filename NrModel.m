@@ -836,14 +836,15 @@ classdef NrModel < handle
             if ~exist(traceDir,'dir')
                 mkdir(traceDir)
             end
-            
-            if ~exist(roiFilePath,'file')
-                error(sprintf('ROI file %s does not exists!',roiFilePath))
-            end
+%Edited by NT on 6/4/22            
+%             if ~exist(roiFilePath,'file')
+%                 error(sprintf('ROI file %s does not exists!',roiFilePath))
+%             end
             
             disp(sprintf('Extract time trace ...'))
             disp(sprintf('Data file: #%d, %s', fileIdx, self.rawFileList{fileIdx}))
-            disp(sprintf('ROI file: %s', roiFilePath))
+%Edited by NT on 6/4/22 
+%             disp(sprintf('ROI file: %s', roiFilePath))
             trial = self.loadTrialFromList(fileIdx,'raw',planeNum);
             
             trial.loadRoiArray(roiFilePath,'replace');
@@ -1000,7 +1001,7 @@ classdef NrModel < handle
                 NewRoiArray=BUnwarpJ.CalcAndApplyBUnwarpJ(ReferenceFile,FilesWORef,Rois,[1,1,1],2,true,TransformationParameters.SIFT,TransformationParameters.SIFTParameters,BUnwarpJFolder,TransformationParameters.BunwarpJ_Parameters);
                 
                 %incooperate reference rois
-                referenceRoi= struct("roi",load(Rois).roiArray,"trial",strcat(self.anatomyDir,"_",RoiFilePrefix));
+                referenceRoi= struct("roi",load(Rois).roiArray,"trial",strcat(self.anatomyDir,"_binned_x1y1z2_",RoiFilePrefix));
                 RoiArray=[NewRoiArray(1:TransformationParameters.Reference_idx-1),referenceRoi,NewRoiArray(TransformationParameters.Reference_idx:length(NewRoiArray))];
                 
                 TempCellArray=struct2cell(NewRoiArray);
@@ -1075,7 +1076,8 @@ classdef NrModel < handle
                         NormImgArray(i,:,:)=adapthisteq(squeeze(tempImgArray(i,:,:)),"NumTiles",CLAHEParameters.NumTiles,'ClipLimit',CLAHEParameters.ClipLimit);
                     end
                 end
-                NewTrialPathArray(i)=fullfile(SavePath,strcat(name,"_Norm",".tif"));
+                %NewTrialPathArray(i)=fullfile(SavePath,strcat(name,"_Norm",".tif"));
+                NewTrialPathArray(i)=fullfile(SavePath,strcat(name,".tif"));
                 imwrite(squeeze(NormImgArray(i,:,:)),NewTrialPathArray(i));
                 tempString= strcat("Save hist norm trial ",int2str(i));
                 disp(tempString); 
@@ -1096,8 +1098,9 @@ classdef NrModel < handle
                 anatomyArray = batch.loadStack(inDir,anatomyFileList);
                 
                 %Load rois               
-%               self.CalculatedTransformationsList(self.CalculatedTransformationsIdx); %by NT, 09/03/22
-                CalculatedTransformationName= self.CalculatedTransformationsList{1}; %by NT, 09/03/22
+               %self.CalculatedTransformationsList(self.CalculatedTransformationsIdx); %by NT, 09/03/22
+               % CalculatedTransformationName= self.CalculatedTransformationsList{1}; %by NT, 09/03/22 
+                CalculatedTransformationName= self.CalculatedTransformationsList(self.CalculatedTransformationsIdx);
                 RoisStruc= load(fullfile(self.resultDir,"BUnwarpJ",CalculatedTransformationName,"Rois.mat"));
                 TempCellArray=struct2cell(RoisStruc.RoiArray);
                 self.BUnwarpJRoiCellarray=squeeze(TempCellArray(1,:,:));
