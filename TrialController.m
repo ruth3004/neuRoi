@@ -413,12 +413,12 @@ classdef TrialController < handle
         end
         
         function delete(self)
-            if ishandle(self.view)
-                if isvalid(self.view)
+%             if ishandle(self.view)
+%                 if isvalid(self.view)
                     self.view.deleteFigures();
                     delete(self.view)
-                end
-            end
-        end
+         end
+%             end
+%         end
     end
 end
