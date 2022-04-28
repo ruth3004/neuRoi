@@ -537,7 +537,7 @@ classdef TrialModel < handle
         function tagArray = getAllRoiTag(self)
         % TODO remove uniform false
         % Debug tag data type (uint16 or double)
-            tagArray = arrayfun(@(x) x.tag, self.roiArray);
+        tagArray = arrayfun(@(x) x.tag, self.roiArray);
         end
         
         function selectAllRoi(self)
@@ -641,10 +641,9 @@ classdef TrialModel < handle
         function insertRoiArray(self,roiArray,option)
             if strcmp(option,'merge')
                 arrayfun(@(x) self.addRoi(x),roiArray);
-            elseif strcmp(option,'replace')
-                self.roiArray = roiArray;
+            elseif strcmp(option,'replace')               
+                self.roiArray = load(roiArray).roiArray;
                 tagArray = self.getAllRoiTag();
-%                tagArray=cellfun(@(x) double(x), tagArray); %Added by NT on 09/03/22
                 self.roiTagMax = max(tagArray);
                 notify(self,'roiArrayReplaced');
             end
