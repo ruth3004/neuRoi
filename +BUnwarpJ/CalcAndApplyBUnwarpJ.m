@@ -71,11 +71,12 @@ else
     TransformationGridEnd =BUnwarpJParameters.TransformationGridEnd;
 end
 
+
 %%Change this according to your imagej
-javaaddpath('C:\Users\teminesi\Fiji\plugins\bUnwarpJ_-2.6.13.jar');
-javaaddpath('C:\Users\teminesi\Fiji\jars\ij-1.53f.jar');
-javaaddpath('C:\Users\teminesi\Fiji\plugins\mpicbg_-1.4.1.jar');%for SIFT
-javaaddpath('C:\Users\teminesi\Fiji\jars\mpicbg-1.4.1.jar');%for SIFT
+javaaddpath('W:\scratch\gfriedri\montruth\Fiji.app\plugins\bUnwarpJ_-2.6.13.jar');
+javaaddpath('W:\scratch\gfriedri\montruth\Fiji.app\jars\ij-1.53t.jar');
+javaaddpath('W:\scratch\gfriedri\montruth\Fiji.app\plugins\mpicbg_-1.4.2.jar');%for SIFT
+javaaddpath('W:\scratch\gfriedri\montruth\Fiji.app\jars\mpicbg-1.4.2.jar');%for SIFT
 
 
 

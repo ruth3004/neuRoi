@@ -1,4 +1,4 @@
-function timeTraceDf = getTimeTraceDf(timeTrace,param)
+function [timeTraceDf,fZero] = getTimeTraceDf(timeTrace,param)
 % GETTIMETRACEDF calculate dF/F from raw time traces
 % timeTrace: a NxM matrix containing N traces of length M
 
